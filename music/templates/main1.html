@@ -1,0 +1,506 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <!--include partials head.html-->
+  {% include 'partials/head.html' %}
+  <!--end of partials head.html-->
+  <style>
+    @media(min-width:1200px) {
+	.ms_main_wrapper.ms_mainindex_wrapper {
+		/* background: url(../images/index_bg.png) no-repeat; */
+		background: url(images/pastor.png) no-repeat !important;
+		background-position: right top;
+		height: 100vh;
+		background-size: contain;
+	}
+	
+}
+  </style>
+  <body>
+    <!--include partials loader.html-->
+
+    <!-- <div class="ms_loader">
+      <div class="wrap">
+        <img src="{% static 'images/loader.gif' %}" alt="loader" />
+      </div>
+    </div> -->
+    <!--end of partials loader.html-->
+    <!--include main wrapper'-->
+    <div class="ms_main_wrapper ms_mainindex_wrapper">
+      <!--include partials sidemenu-->
+      <div class="ms_sidemenu_wrapper">
+        <div class="ms_nav_close ms_cmenu_toggle">
+          <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </div>
+        <div class="ms_sidemenu_inner">
+          <div class="ms_logo_inner">
+            <div class="ms_logo">
+              <a href="{% url 'home' %}"
+                ><img
+                  src="{% static 'images/logo.png' %}"
+                  alt="logo"
+                  class="img-fluid"
+              /></a>
+            </div>
+            <div class="ms_logo_mini">
+              <a href="{% url 'home' %}"
+                ><img
+                  src="{% static 'images/mini_logo.png' %}"
+                  alt="mini_logo"
+                  class="img-fluid"
+              /></a>
+            </div>
+          </div>
+          <div class="ms_nav_wrapper">
+            <h4 class="nav_heading">Browse Music</h4>
+            <ul>
+              <!-- <li>
+                          <a href="index.html" class="active" title="Discover">
+                              <span class="nav_icon">
+                                  <span class="icon icon_discover"></span>
+                              </span>
+                              <span class="nav_text">
+                                  discover
+                              </span>
+                          </a>
+                      </li> -->
+              <!-- <li>
+                          <a href="artist.html" title="Artists">
+                              <span class="nav_icon">
+                                  <span class="icon icon_artists"></span>
+                              </span>
+                              <span class="nav_text">
+                                  artists
+                              </span>
+                          </a>
+                      </li> -->
+              <li>
+                <a href="{% url 'albums' %}" title="Albums">
+                  <span class="nav_icon">
+                    <span class="icon icon_albums"></span>
+                  </span>
+                  <span class="nav_text"> albums </span>
+                </a>
+              </li>
+              <!-- <li>
+                          <a href="stations.html" title="Stations">
+                          <span class="nav_icon">
+                              <span class="icon icon_station"></span>
+                          </span>
+                          <span class="nav_text">
+                              stations
+                          </span>
+                          </a>
+                      </li>             -->
+              <li>
+                <a href="{% url 'music' %}" title="Music">
+                  <span class="nav_icon">
+                    <span class="icon icon_music"></span>
+                  </span>
+                  <span class="nav_text"> music </span>
+                </a>
+              </li>
+            </ul>
+            <h4 class="nav_heading">Your Music</h4>
+            <ul class="nav_downloads">
+              <li>
+                <a href="{% url 'downloads' %}" title="Downloads">
+                  <span class="nav_icon">
+                    <span class="icon icon_download"></span>
+                  </span>
+                  <span class="nav_text"> downloads </span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'purchased' %}" title="Purchased">
+                  <span class="nav_icon">
+                    <span class="icon icon_purchased"></span>
+                  </span>
+                  <span class="nav_text"> purchased </span>
+                </a>
+              </li>
+              <!-- <li><a href="favourite.html" title="Favourites">
+                      <span class="nav_icon">
+                          <span class="icon icon_favourite"></span>
+                      </span>
+                      <span class="nav_text">
+                          favourites
+                      </span>
+                      </a>
+                      </li>
+                      <li><a href="history.html" title="History">
+                      <span class="nav_icon">
+                          <span class="icon icon_history"></span>
+                      </span>
+                      <span class="nav_text">
+                          history
+                      </span>
+                      </a>
+                      </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--end of partials sidemenu-->
+      <!--include content wrapper-->
+      <div class="ms_content_wrapper padder_top8">
+        <!--include partials header.html-->
+
+        <div class="ms_header">
+          <div class="ms_header_inner">
+            <div class="ms_top_left">
+              <div class="ms_top_search">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search for Song, Artists, Playlists and More..."
+                />
+                <span class="search_icon">
+                  <img
+                    src="{% static 'images/svg/search.svg' %}"
+                    alt="search"
+                  />
+                </span>
+              </div>
+              <div class="ms_noti_wrap">
+                <span class="noti_icon bg_cmn_iconwrap"
+                  ><i class="bg_cmn_icon"></i
+                ></span>
+              </div>
+            </div>
+            <div class="ms_top_right">
+              <div class="ms_pro_inner">
+                <!--if user is authenticated-->
+                {% if request.user.is_authenticated %}
+                <div class="ms_pro_img">
+                  <img
+                    src="{% static '' %}images/profile/{{request.user.avatar}}"
+                    alt="Profile"
+                  />
+                </div>
+                <div class="ms_pro_namewrap">
+                  <span class="pro_name"
+                    >Hello, {{ request.user.username }}</span
+                  >
+                  <i class="fa fa-caret-down"></i>
+                </div>
+                <ul class="ms_common_dropdown ms_profile_dropdown">
+                  <!-- <li>
+                    <a href="javascript:void(0);">
+                      <span class="common_drop_icon drop_pro"></span>Profile
+                    </a>
+                  </li> -->
+                  <li>
+                    <a href="#" onclick="logout()">
+                      <span class="common_drop_icon drop_logt"></span>Logout
+                    </a>
+                  </li>
+                </ul>
+                 <!--if user is not authenticated-->
+              {% else %}
+              <div class="ms_pro_namewrap">
+                <span class="pro_name">
+                  <a href="{% url 'login' %}"> Login </a></span
+                >
+              </div>
+              <div class="ms_pro_namewrap">
+                <span class="pro_name"
+                  ><a href="{% url 'register' %}"> Register </a></span
+                >
+              </div>
+              {% endif %}
+              </div>
+             
+
+
+
+              <div class="ms_cmenu_toggle ms_menu_toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end of partials header.html-->
+        {% block content %}
+        <!--include partials common.html-->
+        <!-- {% include 'partials/common.html' %} -->
+        <!--end of partials common.html-->
+        {% endblock %}
+      </div>
+      <!--end of content wrapper-->
+      <!--include partials player.html-->
+      <!-- {% include 'partials/player.html' %} -->
+      <!--end of partials player.html-->
+    </div>
+    <!--end of main wrapper-->
+    <!--include partials scripts-->
+    {% include 'partials/scripts.html' %}
+    <!--end of partials scripts-->
+  </body>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "{% url 'selectsong' %}",
+        success: function (response) {
+          songs = JSON.parse(JSON.parse(response.song));
+          localStorage.setItem("songs", JSON.stringify(songs));
+        },
+      });
+    });
+
+    const downloadalbum = (id) => {
+      $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        data: { id: id },
+        url: "{% url 'downloadalbum' %}",
+        success: function (response) {
+          tracks = JSON.parse(JSON.parse(response.tracks));
+          console.log("TRACKS: ", response.album);
+          album_name = JSON.parse(response.album).trim()
+          if (tracks !== null && tracks.length > 0) {
+            urls = [];
+            tracks.forEach((track) => {
+              urls.push("../../static/media/mp3/" + track.fields.mp3.trim());
+            });
+            console.log("SELECTED TRACKS: ", urls);
+            var zip = new JSZip();
+            var count = 0;
+            var nombre = album_name;
+            //The function is called
+            compressed_img(urls, nombre);
+            function compressed_img(urls, nombre) {
+              var zip = new JSZip();
+              var count = 0;
+              var name = nombre + ".zip";
+              urls.forEach(function (url) {
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                  if (err) {
+                    throw err;
+                  }
+                  zip.file(url, data, {
+                    binary: true,
+                  });
+                  count++;
+                  if (count == urls.length) {
+                    zip
+                      .generateAsync({
+                        type: "blob",
+                      })
+                      .then(function (content) {
+                        saveAs(content, name);
+                      });
+                  }
+                });
+              });
+            }
+            /**if download is successful then log in the database */
+            $.post("{% url 'logalbumdownloads' %}", {'tracks':response.tracks, 'album':album_name}, () => {})
+            
+          }
+        },
+      });
+    };
+
+    const logout = () => {
+      Swal.fire({
+        title: "Do you want to logout?",
+        text: "",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Logout",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            type: "GET",
+            url: "{% url 'logout' %}",
+            success: function (response) {
+              window.location.reload();
+            },
+          });
+        }
+      });
+    };
+
+    let now_playing = document.querySelector(".now-playing");
+    let track_art = document.querySelector(".track-art");
+    let track_name = document.querySelector(".track-name");
+    let track_artist = document.querySelector(".track-artist");
+
+    let playpause_btn = document.querySelector(".playpause-track");
+    let next_btn = document.querySelector(".next-track");
+    let prev_btn = document.querySelector(".prev-track");
+
+    let seek_slider = document.querySelector(".seek_slider");
+    let volume_slider = document.querySelector(".volume_slider");
+    let curr_time = document.querySelector(".current-time");
+    let total_duration = document.querySelector(".total-duration");
+
+    let track_index = 0;
+    let isPlaying = false;
+    let updateTimer;
+
+    // Create new audio element
+    let curr_track = document.createElement("audio");
+
+    // Define the tracks that have to be played
+    var songs = localStorage.getItem("songs");
+    songs = JSON.parse(songs);
+    var song_list = [];
+    if (songs !== null && songs.length > 0) {
+      for (var song of songs) {
+        var fields = song.fields;
+        delete fields.album;
+        delete fields.created_at;
+        delete fields.songlist;
+        delete fields.oga;
+        delete fields.artist_id;
+        fields["name"] = fields["title"];
+        delete fields.title;
+        fields["path"] = "../../static/media/mp3/" + fields["mp3"];
+        song_list.push(fields);
+      }
+    }
+
+    console.log("song_list: ", song_list);
+
+    let track_list = song_list;
+
+    function random_bg_color() {
+      // Get a number between 64 to 256 (for getting lighter colors)
+      let red = Math.floor(Math.random() * 256) + 64;
+      let green = Math.floor(Math.random() * 256) + 64;
+      let blue = Math.floor(Math.random() * 256) + 64;
+
+      // Construct a color withe the given values
+      let bgColor = "rgb(" + red + "," + green + "," + blue + ")";
+
+      // Set the background to that color
+      document.body.style.background = bgColor;
+    }
+
+    function loadTrack(track_index) {
+      $(".player").animate(
+        {
+          opacity: 1,
+        },
+        1000
+      );
+
+      track_index = track_index - 1;
+      console.log("track index: ", track_index);
+      console.log("song_list: ", song_list);
+      clearInterval(updateTimer);
+      resetValues();
+      curr_track.src = track_list[track_index].path;
+      curr_track.load();
+
+      track_art.style.backgroundImage =
+        "url(" + track_list[track_index].image + ")";
+      track_name.textContent = track_list[track_index].name;
+      track_artist.textContent = track_list[track_index].artist;
+      now_playing.textContent =
+        "PLAYING " + (track_index + 1) + " OF " + track_list.length;
+
+      updateTimer = setInterval(seekUpdate, 1000);
+      curr_track.addEventListener("ended", nextTrack);
+      // random_bg_color();
+    }
+
+    function resetValues() {
+      curr_time.textContent = "00:00";
+      total_duration.textContent = "00:00";
+      seek_slider.value = 0;
+    }
+
+    // Load the first track in the tracklist
+    // loadTrack(track_index);
+
+    function playpauseTrack() {
+      if (!isPlaying) playTrack();
+      else pauseTrack();
+    }
+
+    function playTrack() {
+      curr_track.play();
+      isPlaying = true;
+      playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+    }
+
+    function pauseTrack() {
+      curr_track.pause();
+      isPlaying = false;
+      playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+    }
+
+    function nextTrack() {
+      if (track_index < track_list.length - 1) track_index += 1;
+      else track_index = 0;
+      loadTrack(track_index);
+      playTrack();
+    }
+
+    function loadSelectedTrack(track_index) {
+      loadTrack(track_index);
+      playTrack();
+    }
+
+    function prevTrack() {
+      if (track_index > 0) track_index -= 1;
+      else track_index = track_list.length;
+      loadTrack(track_index);
+      playTrack();
+    }
+
+    function seekTo() {
+      let seekto = curr_track.duration * (seek_slider.value / 100);
+      curr_track.currentTime = seekto;
+    }
+
+    function setVolume() {
+      curr_track.volume = volume_slider.value / 100;
+    }
+
+    function seekUpdate() {
+      let seekPosition = 0;
+
+      if (!isNaN(curr_track.duration)) {
+        seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+
+        seek_slider.value = seekPosition;
+
+        let currentMinutes = Math.floor(curr_track.currentTime / 60);
+        let currentSeconds = Math.floor(
+          curr_track.currentTime - currentMinutes * 60
+        );
+        let durationMinutes = Math.floor(curr_track.duration / 60);
+        let durationSeconds = Math.floor(
+          curr_track.duration - durationMinutes * 60
+        );
+
+        if (currentSeconds < 10) {
+          currentSeconds = "0" + currentSeconds;
+        }
+        if (durationSeconds < 10) {
+          durationSeconds = "0" + durationSeconds;
+        }
+        if (currentMinutes < 10) {
+          currentMinutes = "0" + currentMinutes;
+        }
+        if (durationMinutes < 10) {
+          durationMinutes = "0" + durationMinutes;
+        }
+
+        curr_time.textContent = currentMinutes + ":" + currentSeconds;
+        total_duration.textContent = durationMinutes + ":" + durationSeconds;
+      }
+    }
+  </script>
+</html>

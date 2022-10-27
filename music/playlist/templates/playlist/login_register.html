@@ -1,0 +1,232 @@
+{% extends 'main1.html' %} {% block content %}
+{% load static %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h4 class="text-center mb-3">{{ page }}</h4>
+      {% if page == 'Login' %}
+      <form
+        action="{% url 'login' %}"
+        class=""
+        method="post"
+        style="
+          margin-top: 150px;
+          border-style: solid;
+          border-color: #33455a;
+          padding: 50px;
+          border-width: 0.01rem;
+        "
+      >
+        {% csrf_token %}
+        <div class="mb-3">
+          <div class="ms_top_search">
+          {% if messages %} {% if messages.error %}
+          <div
+            class="alert alert-danger alert-dismissible fade show border mr-5 ml-5"
+            role="alert"
+            style="
+              position: absolute;
+              width: 100%;
+              z-index: 100000000000;
+              top: 5%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: red;
+              background-color: #33455a;
+              border: 0.01rem solid #33455a;
+              border-radius: 5px;
+              padding: 10px;
+              /* text-align: center; */
+            "
+          >
+            {% for message in messages %}
+            <strong>{{message}}</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <!-- <span aria-hidden="true">&times;</span> -->
+            </button>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div
+            class="alert alert-success alert-dismissible fade show border"
+            role="alert"
+            style="
+              position: absolute;
+              width: 100%;
+              z-index: 1000000000000;
+              top: 5%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: rgb(30, 199, 30);
+              background-color: #33455a;
+              border: 0.01rem solid #33455a;
+              border-radius: 5px;
+              padding: 10px;
+              /* text-align: center; */
+            "
+          >
+            {% for message in messages %}
+            <strong>{{message}}</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <!-- <span aria-hidden="true">&times;</span> -->
+            </button>
+            {% endfor %}
+          </div>
+          
+          
+          {% endif %} {% endif %}</div>
+        </div>
+        <div class="mb-3">
+          <div class="ms_top_search">
+            <input
+              type="email"
+              name="email"
+              class="btn_b_space form-control"
+              placeholder="Email"
+            />
+          </div>
+          <div id="emailHelp" class="form-text">
+            We'll never share your email with anyone else.
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="ms_top_search">
+            <input
+              type="password"
+              name="password"
+              class="btn_b_space form-control"
+              placeholder="Password"
+            />
+          </div>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn_b_space ms_btn">Login</button>
+        </div>
+        <div class="row justify-content-center">
+          <span
+            ><a class="text-decoration-none" href="{% url 'forgotpass' %}"
+              >Forgot password?</a
+            ></span
+          >
+        </div>
+        <div class="row justify-content-center">
+          <span
+            >Not registered? <a href="{% url 'register' %}">Signup</a>.</span
+          >
+        </div>
+      </form>
+      {% else %}
+      <form
+        action="{% url 'register' %}"
+        class=""
+        method="post"
+        style="
+          margin-top: 150px;
+          border-style: solid;
+          border-color: #33455a;
+          padding: 50px;
+          border-width: 0.01rem;
+        "
+      >
+        {% csrf_token %} {% for field in form %}
+        <div class="mb-3">{% if messages %} {% if messages == 'error' %}
+          <div
+            class="alert alert-danger alert-dismissible fade show border mr-5 ml-5"
+            role="alert"
+            style="
+              position: absolute;
+              width: 100%;
+              z-index: 100000000000;
+              top: 5%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: red;
+              background-color: #33455a;
+              border: 0.01rem solid #33455a;
+              border-radius: 5px;
+              padding: 10px;
+              /* text-align: center; */
+            "
+          >
+            {% for message in messages %}
+            <strong>{{message}}</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <!-- <span aria-hidden="true">&times;</span> -->
+            </button>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div
+            class="alert alert-success alert-dismissible fade show border"
+            role="alert"
+            style="
+              position: absolute;
+              width: 100%;
+              z-index: 1000000000000;
+              top: 5%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: rgb(30, 199, 30);
+              background-color: #33455a;
+              border: 0.01rem solid #33455a;
+              border-radius: 5px;
+              padding: 10px;
+              /* text-align: center; */
+            "
+          >
+            {% for message in messages %}
+            <strong>{{message}}</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <!-- <span aria-hidden="true">&times;</span> -->
+            </button>
+            {% endfor %}
+          </div>
+          {% endif %} {% endif %}</div>
+        <div class="mb-3">
+          <div class="ms_top_search">
+            <input
+              type="{% if field.name == 'email' %}email{% elif field.name == 'password1' %}password{% elif field.name == 'password2' %}password{% else %}text{% endif %}"
+              name="{{ field.name }}"
+              class="form-control btn_b_space {% if field.password.errors %}is-invalid{% endif %}"
+              placeholder="{{ field.label }}"
+              value="{% if field.password %}{{ field.password }}{% endif %}"
+            />
+          </div>
+        </div>
+        {% endfor %}
+        <div class="d-grid gap-2">
+          <input type="submit" value="Register" class="btn_b_space ms_btn" />
+        </div>
+        <div class="row justify-content-center">
+          <span
+            >Already signup?
+            <a href="{% url 'login' %}">login</a> instead.</span
+          >
+        </div>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<!-- </section> -->
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="ms_artist_wrapper common_pages_space">
+    <div class="ms_artist_inner">
+        <!-- Top Albums section -->
+        <div class="ms_artist_slider top_album_slider">
+            <div class="slider_heading_wrap">
+                {% if request.user.is_authenticated %}
+                <div class="slider_cheading">
+                    <h4 class="cheading_title">Top Albums &nbsp;</h4>
+                </div>
+                {% else %}
+                <div class="slider_cheading">
+                    <h4 class="cheading_title">Top Albums &nbsp;</h4>
+                    (Login to download top album)
+                </div>
+                {% endif %}
+                <!-- Add Arrows -->
+                <div class="slider_cmn_controls">
+                    <div class="slider_cmn_nav "><span class="swiper-button-next1 slider_nav_next"></span></div>
+                    <div class="slider_cmn_nav"><span class="swiper-button-prev1 slider_nav_prev"></span></div>
+                </div>
+            </div>
+            <div class="ms_artist_innerslider">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        {% for album in albums %}
+                        <div class="swiper-slide">
+                            <div class="slider_cbox slider_artist_box text-center">
+                                <div class="slider_cimgbox slider_artist_imgbox">
+                                    <img src="{% static '' %}images/album/{{album.image}}" alt="artist" class="img-fluid">
+                                </div>
+                                <div class="slider_ctext slider_artist_text">
+                                    <a class="slider_ctitle slider_artist_ttl" href="{% url 'tracks' album.id %}">{{album.album_name}}</a>
+                                    <p class="slider_cdescription slider_artist_des">{{ album.release_year|date:"Y"}}</p>
+                                    {% if request.user.is_authenticated %}
+                                    <a id="{{album.id}}" href="#" class="slider_ctitle slider_artist_ttl" onclick="downloadalbum('{{album.id}}')">Download Album</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>   
+                        {% endfor %}                  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Recommended Albums section -->
+    </div>
+</div>
+
+{% endblock %}

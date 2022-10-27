@@ -1,0 +1,18 @@
+{% extends 'main1.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div style="position: relative; display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; height: 70vh; margin-top: 100px;">
+        <div class="align-self-center" style="width: 450px; min-height: 300px; text-align: center;">
+            <div style="color:rgb(14, 236, 58); text-align: center; font-size: 30px;">Transaction was {{request.session.payment_verification.data.gateway_response}}!</div>
+            <img clas="img-fluid" style="width: 150px; margin: 70px;" src="{% static 'images/check.jpg' %}" alt="">
+        </div>
+        <a href="{% url 'home' %}"><< Return to home</a>
+    </div>
+    
+</div>
+
+{% endblock %}
