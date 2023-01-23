@@ -112,14 +112,36 @@
                   <span class="nav_text"> downloads </span>
                 </a>
               </li>
-              <li>
+              <h4 class="nav_heading">Contact Us</h4>
+              <ul class="nav_downloads">
+                <li>
+                <a title="Contact us">
+                  <span class="nav_icon">
+                    
+                  </span>
+                  <span class="nav_text">+2349034695784</span>
+                </a>
+              </li>
+              </ul>
+              <h4 class="nav_heading" style="padding-top: 1px !important;">For Partnership</h4>
+              <ul class="nav_downloads">
+                <li>
+                <a title="Partnership">
+                  <span class="nav_icon">
+                    
+                  </span>
+                  <span class="nav_text">+2348064667739</span>
+                </a>
+              </li>
+              </ul>
+              <!-- <li>
                 <a href="{% url 'purchased' %}" title="Purchased">
                   <span class="nav_icon">
                     <span class="icon icon_purchased"></span>
                   </span>
                   <span class="nav_text"> purchased </span>
                 </a>
-              </li>
+              </li> -->
               <!-- <li><a href="favourite.html" title="Favourites">
                       <span class="nav_icon">
                           <span class="icon icon_favourite"></span>
@@ -151,11 +173,14 @@
           <div class="ms_header_inner">
             <div class="ms_top_left">
               <div class="ms_top_search">
-                <input
+                <form action="{% url 'home' %}">
+                  <input
                   type="text"
+                  name="q"
                   class="form-control"
                   placeholder="Search for Song, Artists, Playlists and More..."
-                />
+                /></form>
+                
                 <span class="search_icon">
                   <img
                     src="{% static 'images/svg/search.svg' %}"
@@ -163,22 +188,21 @@
                   />
                 </span>
               </div>
-              <div class="ms_noti_wrap">
+              <div class="ms_noti_wrap"><a href="{% url 'donate' %}">
                 <span class="noti_icon bg_cmn_iconwrap"
-                  ><i class="bg_cmn_icon"></i
-                ></span>
+                  >Donate</span></a>
               </div>
             </div>
             <div class="ms_top_right">
               <div class="ms_pro_inner">
                 <!--if user is authenticated-->
                 {% if request.user.is_authenticated %}
-                <div class="ms_pro_img">
+                <!-- <div class="ms_pro_img">
                   <img
                     src="{% static '' %}images/profile/{{request.user.avatar}}"
                     alt="Profile"
                   />
-                </div>
+                </div> -->
                 <div class="ms_pro_namewrap">
                   <span class="pro_name"
                     >Hello, {{ request.user.username }}</span
@@ -265,8 +289,9 @@
           album_name = JSON.parse(response.album).trim()
           if (tracks !== null && tracks.length > 0) {
             urls = [];
+            var timestamp = new Date().getTime()
             tracks.forEach((track) => {
-              urls.push("../../static/media/mp3/" + track.fields.mp3.trim());
+              urls.push(`../../static/media/mp3/` + track.fields.mp3.trim()+`?${timestamp}`);
             });
             console.log("SELECTED TRACKS: ", urls);
             var zip = new JSZip();

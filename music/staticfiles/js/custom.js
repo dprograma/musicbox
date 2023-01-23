@@ -427,7 +427,7 @@ Assigned to: Theme Forest
         // Player Close On Click
         Player_close: function() {
             $(".ms_player_close").on('click', function() {
-                // $(".ms_player_wrapper").toggleClass("close_player");
+                $(".ms_player_wrapper").toggleClass("close_player");
                 $(".player").toggleClass("close_player");
                 $("body").toggleClass("main_class")
             })

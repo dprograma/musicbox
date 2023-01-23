@@ -15,22 +15,12 @@ class User(AbstractUser):
     is_loggedin = models.BooleanField(default=False)
     token = models.CharField(max_length=255, null=True)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
-
-
-class Collection(models.Model):
-    owner = models.ForeignKey(User, related_name='owner', on_delete=models.CASCADE)
-    purchased = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-
-    class Meta:
-        ordering = ['-created_at']    
+    REQUIRED_FIELDS = ['username']   
 
 
 class Album(models.Model):
     album_name = models.CharField(max_length=255, blank=True)
     artist = models.CharField(max_length=255, blank=True)
-    albumlist = models.ForeignKey(Collection, related_name='album', on_delete=models.SET_NULL, null=True)
     image = models.ImageField(max_length=255, default="avatar.png")
     release_year = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -41,8 +31,7 @@ class Album(models.Model):
 
 class Song(models.Model):
     artist = models.CharField(max_length=255, blank=True)
-    songlist = models.ManyToManyField(Collection, related_name='songlist')
-    title = models.CharField(max_length=255, null=True)
+    title = models.CharField(max_length=255, blank=True)
     album = models.ForeignKey(Album, related_name='tracks', on_delete=models.CASCADE)
     image = models.ImageField(max_length=255, default="avatar.png")
     mp3 = models.CharField(max_length=255, null=True)
@@ -52,6 +41,19 @@ class Song(models.Model):
 
     class Meta:
         ordering = ['id']
+
+
+class Collection(models.Model):
+    owner = models.ForeignKey(User, related_name='owner', on_delete=models.CASCADE)
+    type = models.CharField(max_length=255, blank=True, null=True)
+    purchased = models.BooleanField(default=False)
+    albumlist = models.ManyToManyField(Album)
+    songlist = models.ManyToManyField(Song)
+    title = models.CharField(max_length=255, null=True)
+    created_at = models.DateTimeField(auto_now=True, null=True)
+
+    class Meta:
+        ordering = ['-created_at'] 
 
 
 class downloadLog(models.Model):
@@ -69,9 +71,25 @@ class downloadLog(models.Model):
     class Meta:
         ordering = ('created_at',)
 
+
+class Transaction(models.Model):
+    status = models.BooleanField(default=False)
+    message = models.CharField(max_length=255, blank=True)
+    data = models.TextField(null=True, blank=True)
+
     
+class Donate(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    phone = models.CharField(max_length=255, blank=True, null=True)
+    email = models.EmailField(max_length=255, blank=True, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
+class GuestUser(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    email = models.EmailField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 

@@ -1,27 +1,35 @@
 {% extends 'main1.html' %} {% load static %} {% block content %}
 <style>
-  .player {
-  display: none;
-}
+  .noti_icon {
+    display: none !important;
+  }
 
-@media(max-width:767px){
   .player {
-  display: none;
-}
-}
+    display: none;
+  }
 
-@media(max-width:575px){
-  .player {
-  display: none;
-}
-}
+  @media (max-width: 767px) {
+    .player {
+      display: none;
+    }
+  }
 
-@media(max-width:420px){
-  .player {
-  display: none;
-}
-}
+  @media (max-width: 575px) {
+    .player {
+      display: none;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .player {
+      display: none;
+    }
+  }
 </style>
+
+
+<!-- donate ui -->
+
 <div
   class="hero-wrap"
   style="background-image: url('images/xbg_2.jpg.pagespeed.ic.x-hmjhxkWE.jpg')"
@@ -32,9 +40,8 @@
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-6 ftco-animate">
-         
           <form
-            action="{% url 'checkout' %}"
+            action="{% url 'donate' %}"
             class=""
         method="post"
         style="
@@ -46,9 +53,6 @@
         "
           >
             {% csrf_token %}
-            <!-- <h2 class="text-center mb-5 pb-5 form-text" style="font-size: 24rem; margin-bottom: 20rem !important;">Submit to proceed to payment</h2> -->
-            <div style="text-align: right; margin-bottom: 20rem !important;">Purchase Item: &nbsp;&nbsp;&nbsp;<span style="font-size: 16rem; margin-top: 55px; color: var(--theme-color); text-align: right !important;"> {{request.session.payload.title}}</span> by {{request.session.payload.artist}}</div>
-            <div style="text-align: right; margin-bottom: 20rem !important;">Item Amount: <span style="font-size: 25rem; color: var(--theme-color)">NGN{{request.session.payload.amount}}.00</span></div>
             <div class="mb-3">
               <div class="ms_top_search">
               {% if messages %} {% if messages.error %}
@@ -117,43 +121,14 @@
               
               {% endif %} {% endif %}</div>
             </div>
-            <input type="hidden" name="amount" value="{{request.session.payload.amount}}">
-            <input type="hidden" name="formatted_amount" value="{{request.session.payload.formatted_amount}}">
-            <input type="hidden" name="title" value="{{request.session.payload.title}}">
-            <input type="hidden" name="artist" value="{{request.session.payload.artist}}">
-            {% if request.session.payload.email %}
-            <div class="mb-3">
-              <div class="ms_top_search">
-                <input
-                  type="text"
-                  name="username"
-                  class="btn_b_space form-control"
-                  value="{{request.session.payload.username}}"
-                  disabled
-                />
-              </div>
-              </div>
-            <div class="mb-3">
-              <div class="ms_top_search">
-                <input
-                  type="email"
-                  name="email"
-                  class="btn_b_space form-control"
-                  value="{{request.session.payload.email}}"
-                  disabled
-                />
-              </div>
-              </div>
-              {% else %}
               <div class="mb-3">
                 <div class="ms_top_search">
                   <input
                     type="text"
                     name="username"
                     class="btn_b_space form-control"
-                    placeholder="Enter your username"
+                    placeholder="(Optional) Enter your name"
                     value=""
-                    required
                   />
                 </div>
                 </div>
@@ -169,19 +144,41 @@
                   />
                 </div>
                 </div>
-              {% endif %}
+                <div class="mb-3">
+                    <div class="ms_top_search">
+                      <input
+                        type="text"
+                        name="phone"
+                        placeholder="(Optional) Enter your mobile number"
+                        class="btn_b_space form-control"
+                        value=""
+                      />
+                    </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="ms_top_search">
+                          <input
+                            type="number"
+                            name="amount"
+                            min="1"
+                            step="any"
+                            placeholder="Enter amount"
+                            class="btn_b_space form-control"
+                            value=""
+                            required
+                          />
+                        </div>
+                        </div>
               <div class="d-grid gap-2">
-                <button type="submit" class="btn_b_space ms_btn">Proceed to payment</button>
+                <button type="submit" class="btn_b_space ms_btn">Proceed to Checkout</button>
               </div>
           </form>
-          <div id="emailHelp" class="row justify-content-center form-text mt-5">
-            Payment made secure by PayStack. <img src="{% static 'images/paystack-logo.png' %}" style="width: 35px;" class="img-fluid">
-          </div>
         </div>
       </div>
     </div>
   </section>
 </div>
+
+<!-- end donate ui -->
+
 {% endblock %}
-
-

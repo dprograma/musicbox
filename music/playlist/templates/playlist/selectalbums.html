@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-
 <div class="ms_artist_wrapper common_pages_space">
     <div class="ms_artist_inner">
         <!-- Top Albums section -->
@@ -14,8 +13,7 @@
                 </div>
                 {% else %}
                 <div class="slider_cheading">
-                    <h4 class="cheading_title">Top Albums &nbsp;</h4>
-                    (Login to download top album)
+                    <h4 class="cheading_title">&nbsp;</h4>
                 </div>
                 {% endif %}
                 <!-- Add Arrows -->
@@ -36,8 +34,15 @@
                                 <div class="slider_ctext slider_artist_text">
                                     <a class="slider_ctitle slider_artist_ttl" href="{% url 'tracks' album.id %}">{{album.album_name}}</a>
                                     <p class="slider_cdescription slider_artist_des">{{ album.release_year|date:"Y"}}</p>
-                                    {% if request.user.is_authenticated %}
-                                    <a id="{{album.id}}" href="#" class="slider_ctitle slider_artist_ttl" onclick="downloadalbum('{{album.id}}')">Download Album</a>
+                                    {% if album.album_name in request.session.album_collection or album.album_name in request.META.album_collection %}
+                                    <a id="{{album.id}}" class="slider_ctitle slider_artist_ttl" onclick="downloadalbum('{{album.id}}')">Download Album</a>
+                                    {% else %}
+                                    <form class="slider_ctitle slider_artist_ttl"  action="{% url 'downloadmyalbum' %}" method="post">
+                                        {% csrf_token %}
+                                    <span style="display: flex; flex-direction: column; justify-content: center; text-align: center"></span>
+                                    <input type="hidden" name="album" id="{{album.id}}" value="{{album.id}}">
+                                    <button style="display: flex; justify-content: center; align-self: center; border-style:none; width: auto; height: auto; background-color: transparent; text-align: center;" >Download Now</button>
+                                    </form>
                                     {% endif %}
                                 </div>
                             </div>

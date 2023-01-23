@@ -8,7 +8,8 @@
 $(document).ready(function () {
   $('.download_anchor').click(function (e) {
     e.preventDefault()
-    const title = e.target.id
+    const title = e.target.title
+    // console.log("titlE: ", title)
     fetch(`../static/media/mp3/${title}`)
       .then(resp => resp.blob())
       .then(blob => {
@@ -24,7 +25,15 @@ $(document).ready(function () {
         // alert('your file has downloaded!'); // or you know, something with better UX...
       })
 
-    //   .catch(() => alert('oh no!'));
+      // .catch(() => alert('oh no!'));
   });
+
+
+  $('.ms_player_close').on("click", function(){
+    $('.player').toggle().css({
+      "top": "-1px", "bottom": "0"
+    })
+  })
 });
+
 

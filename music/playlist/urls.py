@@ -14,6 +14,7 @@ urlpatterns = [
     path('book-appointment/', views.bookAppointment, name='book-appointment'),
     path('download-track/', views.downloadTrack, name='selectsong'),
     path('my_track/', views.downloadMyTrack, name='downloadtrack'),
+    path('my_album/', views.downloadMyAlbum, name='downloadmyalbum'),
     path('downloads/', views.download, name='downloads'),
     path('music/', views.selectMusic, name='music'),
     path('albums/', views.selectAlbums, name='albums'),
@@ -25,5 +26,5 @@ urlpatterns = [
     path('failure/', views.payFailed, name='failure'),
     path('log-album-downloads/', views.logAlbumDownloads, name='logalbumdownloads'),
     path('paystack_callback/', views.payPaystackCallback, name='paystackcallback'),
-
+    path('donate/', views.makeDonation, name='donate'),
 ]
